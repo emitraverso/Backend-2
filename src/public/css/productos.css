@@ -1,0 +1,33 @@
+body{
+    background-color:aquamarine;
+    margin: 10px;
+}
+
+body h1{
+    font-size: 25px;
+}
+
+header{
+    background-color:#b9ffe8;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+header h1{
+    font-size: 20px;
+}
+
+footer{
+    background-color:#b9ffe8;
+    margin-top: 20px;
+    padding: 10px;
+}
+footer h1{
+    font-size: 20px;
+}
+
+.card{
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+}

@@ -15,7 +15,7 @@ const productos = JSON.parse(data)
 productsRouter.get('/', (req,res) => {
     const {limit} = req.query
     const productosLimit = productos.slice(0, limit)
-    res.status(200).send(productosLimit)
+    res.status(200).render('templates/home', {productos:productos, js:'productos.js', css:'productos.css'})
 })
 
 productsRouter.get('/:pid', (req,res) => {

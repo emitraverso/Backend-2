@@ -1,0 +1,19 @@
+<h1>Productos</h1>
+
+<div class="row">
+    {{#each productos}}
+        {{#if status}}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">Descripción: {{description}}</p>
+                    <p class="card-text">Categoria: {{category}}</p>
+                    <p class="card-text">Código: {{code}}</p>
+                    <p class="card-text">Precio: ${{price}}</p>
+                    <p class="card-text">Stock: {{stock}}</p>
+                    <button type="button" class="btn btn-secondary">Agregar al carrito</button>
+                </div>
+            </div>
+        {{/if}}
+    {{/each}}
+</div>
