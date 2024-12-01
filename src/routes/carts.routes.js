@@ -43,7 +43,7 @@ cartsRouter.post('/:cid/product/:pid', async (req,res) => {
     if (carrito) {
         const indProducto = carrito.products.findIndex(prod => prod.id == idProducto)
         if (indProducto != -1) {
-            carrito.products[indProducto].quantity = quantity 
+            carrito.products[indProducto].quantity += quantity 
     
         }else{
             carrito.products.push({id: idProducto, quantity: quantity})
