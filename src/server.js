@@ -1,4 +1,5 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import productsRouter from './routes/products.routes.js'
 import cartsRouter from './routes/carts.routes.js'
 import chatRouter from './routes/chat.routes.js'
@@ -7,6 +8,7 @@ import { __dirname } from './path.js'
 import multerRouter from './routes/images.routes.js'
 import { create } from 'express-handlebars'
 import { Server } from 'socket.io'
+import { engine } from 'express-handlebars';
 
 
 const app = express()
@@ -16,13 +18,18 @@ const server = app.listen(PORT, () => {
     console.log("Server on port", PORT)
 })
 
+
+
+await mongoose.connect("mongodb+srv://emitraverso:Balcarce1254@cluster0.u0zgu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+.then(() => console.log("DB Connected"))
+.catch((e) => console.log("Connection error: ", e))
+
 //Iniciar Socket.io en el servidor
 const io = new Server(server)
 
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-
 
 app.engine('handlebars', hbs.engine) //registra un nuevo motor de plantillas llamado "handlebars" y asocia la extensión .handlebars con el motor hbs.engine.
 app.set('view engine', 'handlebars') //Define que "handlebars" será el motor que se usará por defecto para renderizar vistas.

@@ -1,0 +1,17 @@
+<h1>Carrito</h1>
+
+<div class="row">
+    {{#each productos}}
+    <h2>Productos:</h2>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{title}}</h5>
+            <p class="card-text">Descripción: {{description}}</p>
+            <p class="card-text">Categoria: {{category}}</p>
+            <p class="card-text">Precio: ${{price}}</p>
+            <p class="card-text">Cantidad: {{quantity}}</p>
+        </div>
+    </div>
+
+    {{/each}}
+</div>
