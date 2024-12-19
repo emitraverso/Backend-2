@@ -13,7 +13,8 @@ export const getProducts = async (req, res) => {
         const productos = await productModel.paginate(query, {
             limit: limite, 
             page: pagina, 
-            sort
+            sort,
+            lean: true
         })
         console.log(productos)
         //res.status(200).send(productos)
@@ -21,6 +22,7 @@ export const getProducts = async (req, res) => {
 
     } catch (e) {
         res.status(500).send("Error en la consulta: ", e)
+       
     }
 }
 
@@ -70,6 +72,7 @@ export const deleteProduct = async (req, res) => {
 
     } catch (e) {
         res.status(500).send("Error al eliminar el producto: ", e)
+        
     }
 }
 

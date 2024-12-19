@@ -7,6 +7,11 @@ body h1{
     font-size: 25px;
 }
 
+body h2{
+    margin: 10px;
+    font-size: 22px;
+}
+
 header{
     background-color:#b9ffe8;
     margin-bottom: 20px;

@@ -1,15 +1,16 @@
 <h1>Carrito</h1>
 
 <div class="row">
-    {{#each productos}}
     <h2>Productos:</h2>
+    {{#each productos}}
+
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">{{title}}</h5>
-            <p class="card-text">Descripción: {{description}}</p>
-            <p class="card-text">Categoria: {{category}}</p>
-            <p class="card-text">Precio: ${{price}}</p>
-            <p class="card-text">Cantidad: {{quantity}}</p>
+            <h5 class="card-title">{{this.id_producto.title}}</h5>
+            <p class="card-text">Descripción: {{this.id_producto.description}}</p>
+            <p class="card-text">Categoria: {{this.id_producto.category}}</p>
+            <p class="card-text">Precio: ${{this.id_producto.price}}</p>
+            <p class="card-text">Cantidad: {{this.quantity}}</p>
         </div>
     </div>
 

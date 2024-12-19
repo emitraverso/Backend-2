@@ -3,11 +3,11 @@ import cartModel from "../models/cart.model.js"
 export const getCart = async (req, res) => {
     try {
         const idCarrito = req.params.cid
-        const carrito = await cartModel.findOne({_id: idCarrito})
+        const carrito = await cartModel.findOne({_id: idCarrito}).populate('products.id_producto').lean();
         if(carrito) {
-            //res.status(200).send(carrito)
             console.log(carrito.products)
-            res.status(200).render('templates/cart', { productos: carrito.products, js: 'productos.js', css: 'productos.css' })
+            //res.status(200).send(carrito.products)
+            res.status(200).render('templates/cart', { productos: carrito.products, js: 'productos.js', css: 'productos.css'})
         } else {
             res.status(404).send({mensaje: "El carrito no existe"})
         }
