@@ -1,12 +1,6 @@
 import { Router } from "express"
 
-import { postCart } from "../controllers/carts.controller.js";
-import { getCart } from "../controllers/carts.controller.js";
-import { addProdCart } from "../controllers/carts.controller.js";
-import { deleteCart } from "../controllers/carts.controller.js";
-import { deleteProdCart } from "../controllers/carts.controller.js";
-import { updateProdsCart } from "../controllers/carts.controller.js";
-import { updateQtyCart } from "../controllers/carts.controller.js";
+import { postCart, getCart, addProdCart, deleteCart , deleteProdCart, updateProdsCart, updateQtyCart } from "../controllers/cartsController.js";
 
 const cartsRouter = Router()
 

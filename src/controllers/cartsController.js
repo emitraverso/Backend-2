@@ -1,4 +1,4 @@
-import cartModel from "../models/cart.model.js"
+import cartModel from "../models/cart.js"
 
 export const getCart = async (req, res) => {
     try {
@@ -7,7 +7,7 @@ export const getCart = async (req, res) => {
         if(carrito) {
             console.log(carrito.products)
             //res.status(200).send(carrito.products)
-            res.status(200).render('templates/cart', { productos: carrito.products, js: 'productos.js', css: 'productos.css'})
+            res.status(200).render('templates/cart', { productos: carrito.products, css: 'productos.css'})
         } else {
             res.status(404).send({mensaje: "El carrito no existe"})
         }
@@ -37,7 +37,7 @@ export const addProdCart = async (req, res) => {
         if (carrito) {
             const indProducto = carrito.products.findIndex(prod => prod.id_producto._id == idProducto)
             if (indProducto != -1) {
-                carrito.products[indProducto].quantity += quantity 
+                carrito.products[indProducto].quantity = quantity 
         
             }else{
                 carrito.products.push({id_producto: idProducto, quantity: quantity})

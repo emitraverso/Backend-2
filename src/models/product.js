@@ -13,7 +13,7 @@ const productSchema = new Schema({
     category: {
         type: String,
         required: true,
-        index: true 
+        index: true //category va a ser un indice
     },
     status: {
         type: Boolean,

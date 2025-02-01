@@ -1,19 +1,48 @@
-<h1>Productos</h1>
+<div class="container mt-5">
+    <h1>Productos</h1>
 
-<div class="row">
-    {{#each productos}}
+    <div class="row">
+        {{#each productos}}
         {{#if this.status}}
+        <div class="col-md-4 mb-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{this.title}}</h5>
                     <p class="card-text">Descripción: {{this.description}}</p>
-                    <p class="card-text">Categoria: {{this.category}}</p>
-                    <p class="card-text">Código: {{this.code}}</p>
                     <p class="card-text">Precio: ${{this.price}}</p>
-                    <p class="card-text">Stock: {{this.stock}}</p>
+                    <a href="/api/products/{{this._id}}">Ver Producto</a>
                     <button type="button" class="btn btn-secondary">Agregar al carrito</button>
                 </div>
             </div>
+        </div>
         {{/if}}
-    {{/each}}
+        {{/each}}
+    </div>
+
+
+    <nav aria-label="Page Navigation">
+        <ul class="pagination justify-content-center">
+            {{#if prods.hasPrevPage}}
+            <li class="page-item">
+
+                <a class="page-link" href="?page={{prods.prevPage}}&limit={{prods.limit}}" aria-label="Previous"><span
+                        aria-hidden="true">&laquo;</span></a>
+            </li>
+            {{/if}}
+            {{#each prods.pageNumbers}}
+            <li class="page-item {{#if this.isCurrent}}active {{/if}}">
+
+                <a class="page-link" href="?page={{this.number}}&limit={{prods.limit}}">{{this.number}}</a>
+            </li>
+            {{/each}}
+            {{#if prods.hasNextPage}}
+            <li class="page-item">
+
+                <a class="page-link" href="?page={{prods.nextPage}}&limit={{prods.limit}}" aria-label="Next"><span
+                        aria-hidden="true">&raquo;</span></a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
+
 </div>

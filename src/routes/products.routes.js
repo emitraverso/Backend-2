@@ -1,10 +1,7 @@
 import { Router } from "express"
 
-import { getProducts } from "../controllers/products.controller.js";
-import { getProduct } from "../controllers/products.controller.js";
-import { postProduct } from "../controllers/products.controller.js";
-import { putProduct} from "../controllers/products.controller.js";
-import { deleteProduct } from "../controllers/products.controller.js";
+import { getProducts, getProduct, postProduct, updateProduct, deleteProduct } from "../controllers/productsController.js";
+
 
 const productsRouter = Router()
 
@@ -17,7 +14,7 @@ productsRouter.get('/:pid', getProduct)
 productsRouter.post('/', postProduct)
 
 //PUT
-productsRouter.put('/:pid', putProduct)
+productsRouter.put('/:pid', updateProduct)
 
 //DELETE
 productsRouter.delete('/:pid', deleteProduct)

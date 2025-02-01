@@ -1,4 +1,4 @@
-import productModel from "../models/product.model.js";
+import productModel from "../models/product.js";
 
 
 export const getProducts = async (req, res) => {
@@ -10,15 +10,20 @@ export const getProducts = async (req, res) => {
         const query = filterMethod && filter ? {[filterMethod]: filter} : {}
         const sort = ord === "asc" || ord === "desc" ? { price: ord } : {}
 
-        const productos = await productModel.paginate(query, {
+        const prods = await productModel.paginate(query, {
             limit: limite, 
             page: pagina, 
             sort,
             lean: true
         })
-        console.log(productos)
-        //res.status(200).send(productos)
-        res.status(200).render('templates/home', { productos: productos.docs, js: 'productos.js', css: 'productos.css' })
+
+        prods.pageNumbers = Array.from({length: prods.totalPages}, (_, i) => ({
+            number: i + 1,
+            isCurrent: i + 1 === prods.page
+        }))
+
+        //console.log(prods)
+        res.status(200).render('templates/home', { productos: prods.docs, prods: prods,  css: 'products.css' })
 
     } catch (e) {
         res.status(500).send("Error en la consulta: ", e)
@@ -30,13 +35,14 @@ export const getProduct = async (req, res) => {
 
     try {
         const idProducto = req.params.pid
-        const producto = await productModel.findById(idProducto)
+        const product = await productModel.findById(idProducto).lean()
         
-        if(producto)
-            res.status(200).send(producto)
-        else
+        if(product){
+            console.log("Producto encontrado:", product)
+            res.status(200).render('templates/product', { producto: product, css: 'products.css' })
+        }else{
             res.status(404).send("El producto no existe") 
-        
+        }
     } catch (e) {
         res.status(500).send("Error en la consulta: ", e)
     }
@@ -49,16 +55,16 @@ export const postProduct = async (req, res) => {
         res.status(201).send("Se ha creado el producto!")
 
     } catch (e) {
-        res.status(500).send("Error en la creación del producto: ", e)
+        res.status(500).send("Error en la creación del producto: ")
     }
 }
 
-export const putProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
     try {
         const idProducto = req.params.pid
         const producto = req.body
         const respuesta = await productModel.findByIdAndUpdate(idProducto, producto)
-        res.status(200).send("Se ha actualizado el producto !")
+        res.status(200).redirect('templates/home', {respuesta})
     } catch (e) {
         res.status(500).send("Error al actualizar el producto: ", e)
     }
@@ -68,13 +74,10 @@ export const deleteProduct = async (req, res) => {
     try {
         const idProducto = req.params.pid
         const respuesta = await productModel.findByIdAndDelete(idProducto)
-        res.status(200).send("Se ha eliminado el producto")
+        res.status(200).redirect('templates/home', {respuesta})
 
     } catch (e) {
         res.status(500).send("Error al eliminar el producto: ", e)
         
     }
 }
-
-
-

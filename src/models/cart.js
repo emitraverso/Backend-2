@@ -4,7 +4,7 @@ const cartSchema = new Schema({
     products: {
         type: [
             {
-                id_producto: {
+                id_prod: {
                     type: Schema.Types.ObjectId,
                     required: true,
                     ref: 'products' //Hace referencia a un id de la coleccion products
@@ -15,14 +15,14 @@ const cartSchema = new Schema({
                 }
             }
         ],
-        default: []
-    },
-    
+        default: []    
+    }
 })
 
 cartSchema.pre('findOne', function(){
-    this.populate('products.id_producto')
+    this.populate('products.id_prod')
 })
 
 const cartModel = model("carts", cartSchema)
+
 export default cartModel
