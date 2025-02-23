@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -18,19 +19,19 @@ const hbs = create()
 
 //Middlewares
 app.use(express.json())
-app.use(cookieParser("CookieSecret")) 
+app.use(cookieParser(process.env.SECRET_COOKIE)) 
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://emitraverso:mPd6rrgxm8AhL3jO@cluster0.gprfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        mongoUrl: process.env.URL_MONGO,
         mongoOptions: {},
-        ttl: 15
+        ttl: 15000000
     }),    
-    secret: 'SessionSecret',
+    secret: process.env.SECRET_SESSION,
     resave: true,
     saveUninitialized: true
 }))
 
-mongoose.connect("mongodb+srv://emitraverso:mPd6rrgxm8AhL3jO@cluster0.gprfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.URL_MONGO)
 .then(() => console.log("DB conectada"))
 .catch((e) => console.log("Error al conectar a DB:", e))
 
@@ -50,7 +51,6 @@ app.use('/public', express.static(__dirname + '/public')) //Carpeta publica como
 
 //Rutas
 app.use('/api/sessions', sessionRouter)
-app.use('/api/public', express.static(__dirname+'/public')) //Carpeta publica como destino de archivos estaticos
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.get('/', (req,res) => {

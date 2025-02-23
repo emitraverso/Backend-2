@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import { getProducts, getProduct, postProduct, updateProduct, deleteProduct } from "../controllers/productsController.js";
-
+import { authorization } from "../config/middlewares.js";
 
 const productsRouter = Router()
 
@@ -11,12 +11,12 @@ productsRouter.get('/', getProducts)
 productsRouter.get('/:pid', getProduct)
 
 //POST
-productsRouter.post('/', postProduct)
+productsRouter.post('/', authorization("Admin"), postProduct)
 
-//PUT
-productsRouter.put('/:pid', updateProduct)
+//UPDATE
+productsRouter.put('/:pid',  authorization("Admin"), updateProduct)
 
 //DELETE
-productsRouter.delete('/:pid', deleteProduct)
+productsRouter.delete('/:pid',  authorization("Admin"), deleteProduct)
 
 export default productsRouter

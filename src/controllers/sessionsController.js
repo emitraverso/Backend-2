@@ -17,8 +17,7 @@ export const login = async (req,res) => {
             httpOnly: true,
             secure: false,
             maxAge: 3600000
-        })
-        res.status(200).redirect('/')
+        }).send({message: "Usuario logueado correctamente"})
     }catch(e) {
         console.log(e); 
         res.status(500).send("Error al loguear usuario")
@@ -31,20 +30,20 @@ export const register = async (req,res) => {
         if(!req.user) { //Consulto si en la sesion se encuentra mi usuario
             return res.status(400).send("El mail ya se encuentra registrado")
         } 
-        res.status(201).send("Usuario creado correctamente")
+        res.status(201).send({message: "Usuario creado correctamente"})
     }catch(e) {
         console.log(e);
-        res.status(500).send("Error al registrar usuario")
+        res.status(500).send({message: "Error al registrar usuario"})
     }
     
 }
 
 export const viewRegister = (req,res) => {
-    res.status(200).render('templates/register', {})
+    res.status(200).render('templates/register', {title: "Registro", url_js: "/public/js/register.js", css: 'products.css'})
 }
 
 export const viewLogin = (req,res) => {
-    res.status(200).render('templates/login', { css: 'products.css' })
+    res.status(200).render('templates/login', { title: "Inicio de Sesion", url_js: "/public/js/login.js", css: 'products.css' })
 }
 
 export const githubLogin = (req,res) => {
@@ -53,7 +52,12 @@ export const githubLogin = (req,res) => {
             email: req.user.email,
             first_name: req.user.first_name
         } 
-        res.status(200).redirect("/")
+        const token = generateToken(req.user)
+        res.status(200).cookie('coderCookie', token, {
+            httpOnly: true,
+            secure: false, 
+            maxAge: 3600000 
+        }).redirect("/api/products")
     }catch(e) {
         console.log(e); 
         res.status(500).send("Error al loguear usuario")
